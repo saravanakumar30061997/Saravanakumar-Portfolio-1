@@ -22,7 +22,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # SECURITY: Set allowed hosts
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default="localhost").split(",")
+ALLOWED_HOSTS = ["*"]
 
 # Cloudinary Configuration
 CLOUDINARY_STORAGE = {
