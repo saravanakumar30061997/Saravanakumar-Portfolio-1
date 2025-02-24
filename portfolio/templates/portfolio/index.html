@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container my-5">
+        <!-- Main Heading -->
+        <h1 class="text-center mb-3 text-primary fw-bold">SARAVANAKUMAR S</h1>
+        
+        <!-- Short Summary -->
+        <p class="text-center text-muted mb-4">
+            Passionate about technology, data analysis, and software development. 
+            Explore my projects and certifications below.
+        </p>
+
+        <!-- Profile Image -->
+        <div class="text-center mb-5">
+            <img src="{% static 'portfolio/1002.jpg' %}" alt="Profile Picture" 
+                class="img-fluid rounded-circle shadow-lg border border-3 border-primary" width="180">
+        </div>
+        <!-- Certification Count -->
+        <h4 class="text-center mb-5">
+            Saravanakumar has completed <span class="fw-bold text-primary">{{ context.count }}</span> 
+            cerificate{{ context.count | pluralize }}.
+        </h4>
+<!-- Portfolio Items -->
+<div class="row g-4">
+    {% for item in page_obj %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-lg border-0 rounded">
+            {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top rounded-top" alt="{{ item.title }}">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title fw-bold">
+                    <a href="{% url 'portfolio:detail' item.id %}" class="text-dark text-decoration-none">
+                        {{ item.title }}
+                    </a>
+                </h5>
+                <p class="card-text text-muted">{{ item.description|truncatewords:20 }}</p>
+                <div class="mt-auto">
+                    <a href="{% url 'portfolio:detail' item.id %}" class="btn btn-primary btn-sm w-100" target="_self" rel="noopener noreferrer">View More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No portfolio items available.</p>
+    {% endfor %}
+</div>
+
+                <!-- Bootstrap Paginator -->
+        <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1" aria-label="First">
+                            <span aria-hidden="true">&laquo;&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <!-- Page Number Display -->
+                <li class="page-item disabled">
+                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                            <span aria-hidden="true">&raquo;&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+    </div>
+{% endblock %}

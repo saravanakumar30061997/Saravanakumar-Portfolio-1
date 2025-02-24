@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center">
+        <!-- Certification Title -->
+        <h1 class="fw-bold text-primary">{{ context.title }}</h1>
+        
+        <!-- Certification Image -->
+        {% if context.image %}
+        <img src="{{ context.image.url }}" alt="{{ context.title }}" 
+             class="img-fluid rounded shadow-lg border border-3 border-primary mt-3" width="400">
+        {% endif %}
+        
+        <!-- Description -->
+        <div class="mt-4">
+            <p class="lead text-muted">{{ context.description | safe }}</p>
+        </div>
+
+        <!-- Clickable URL -->
+        <div class="mt-4">
+            <p class="lead text-muted">
+                <a href="{{ context.url }}" target="_blank" rel="noopener noreferrer">
+                    {{ context.url }}
+                </a>
+            </p>
+        </div>
+
+
+        <!-- Back Button -->
+        <a href="{% url 'projects:pro' %}?page={{ portfolio_page }}" class="btn btn-secondary mt-3">
+            <i class="fas fa-arrow-left"></i> Back to Portfolio
+        </a>
+        
+    </div>
+</div>
+{% endblock %}
